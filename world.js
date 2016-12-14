@@ -19,7 +19,7 @@ function init() {
     //renderer.clear();
 
     camera = new THREE.PerspectiveCamera(
-        45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        45, window.innerWidth / window.innerHeight, 0.1, 10000);
     camera.position.x = 35;
     camera.position.y = 36;
     camera.position.z = 33;
@@ -94,15 +94,13 @@ function cloud(sphereGeometry) {
     scene.add(cloudMesh);
 
 
-
-
 }
 
 
 function createCloudMaterial() {
     var cloudTexture = THREE.ImageUtils.loadTexture(
         "assets/textures/planets/fair_clouds_4k.png");
-    var cloudMaterial = new THREE.MeshBasicMaterial();
+    var cloudMaterial = new THREE.MeshPhongMaterial();
     cloudMaterial.map = cloudTexture;
     cloudMaterial.transparent = true;
     return cloudMaterial;
@@ -110,8 +108,14 @@ function createCloudMaterial() {
 
 function addDirectionalLight() {
     var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position = new THREE.Vector3(100, 10, -50);
+    
+    directionalLight.position.set( 300, 150, -50 ); 
+    directionalLight.target.position.set( 0, 0, 0 ); 
+
     directionalLight.name = 'directional';
+
+
+    scene.add(new THREE.DirectionalLightHelper(directionalLight,50));
     scene.add(directionalLight);
 
 }
@@ -119,19 +123,12 @@ function addDirectionalLight() {
 
 function addAmbientLight() {
     var ambientLight = new THREE.AmbientLight(0x111111);
-    scene.add(ambientLight);
+    //scene.add(ambientLight);
 }
 
 function render() {
-    // render using requestAnimationFrame
     cameraControl.update();
 
-    //composer.reset();
-    //composer.render( scene, camera );
-    //composer.pass( effectCopy );
-    //composer.render(  );
-
-    //composer.toScreen();
     cloudMesh.rotation.y += 0.001;
     earthMesh.rotation.y -= 0.0005;
 
