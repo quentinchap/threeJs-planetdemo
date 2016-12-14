@@ -115,7 +115,7 @@ function addDirectionalLight() {
     directionalLight.name = 'directional';
 
 
-    scene.add(new THREE.DirectionalLightHelper(directionalLight,50));
+    //scene.add(new THREE.DirectionalLightHelper(directionalLight,50));
     scene.add(directionalLight);
 
 }
